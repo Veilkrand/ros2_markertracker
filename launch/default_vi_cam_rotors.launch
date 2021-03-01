@@ -1,0 +1,21 @@
+<launch>
+    
+    <include file="$(find gazebo_assets_drone_race)/launch/test_rotors_msf_camera.launch"/>
+    
+    <node pkg="markertracker_node" type="process_frame_topic.py" name="markertracker_node" output="screen" required="true">
+
+        <param name="input_image_topic" type="string" value="/firefly/vi_sensor/camera_depth/camera/image_raw"/>
+        <param name="publish_topic_image_result" value="True"/>
+        <param name="path_to_camera_file" value="$(find markertracker_node)/calibration/vi_cam_depth_RotorS.yaml"/>
+        <param name="marker_length" value="50"/>
+
+        <param name="camera_frame_id" value="firefly/vi_sensor/base_link"/>
+
+        <!-- <param name="camera_frame_id" value="state"/> -->
+
+
+    </node>
+
+    <node type="rviz" name="rviz" pkg="rviz"/>
+
+</launch>

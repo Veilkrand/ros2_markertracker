@@ -1,0 +1,3 @@
+uint16 id
+geometry_msgs/PoseWithCovarianceStamped pose_cov_stamped
+uint16[] corners
