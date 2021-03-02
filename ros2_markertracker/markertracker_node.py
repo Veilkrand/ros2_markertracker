@@ -21,8 +21,8 @@ from ros2_markertracker.transformations import quaternion_from_euler
 
 import math
 
-from markertracker_node.msg import GateMarker, GateMarkersArray
-from ArucoWrapper import ArucoWrapper
+from ros2_markertracker.msg import GateMarker, GateMarkersArray
+from ros2_markertracker.ArucoWrapper import ArucoWrapper
 
 # ---
 # Ros2
