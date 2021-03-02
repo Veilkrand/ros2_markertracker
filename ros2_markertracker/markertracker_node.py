@@ -6,12 +6,8 @@ Subscribe to a ROS raw image topic, transform to OpenCV image. And process the i
 
 """
 
-from __future__ import print_function
 
-# import roslib
-# roslib.load_manifest('my_package')
 
-import rospy
 import cv2
 from cv_bridge import CvBridge, CvBridgeError
 from visualization_msgs.msg import Marker, MarkerArray
@@ -23,10 +19,71 @@ from tf.transformations import quaternion_from_euler, euler_from_quaternion, eul
 import math
 
 from markertracker_node.msg import GateMarker, GateMarkersArray
-
-
 from ArucoWrapper import ArucoWrapper
 
+# ---
+# Ros2
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+class MinimalPublisher(Node):
+
+    def __init__(self):
+        super().__init__('minimal_publisher')
+        self.publisher_ = self.create_publisher(String, 'topic', 10)
+        timer_period = 0.5  # seconds
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.i = 0
+
+    def timer_callback(self):
+        msg = String()
+        msg.data = 'Hello World: %d' % self.i
+        self.publisher_.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        self.i += 1
+
+
+class ProcessFramePubSubs(Node):
+
+    def __init__(self):
+        super().__init__('markertracker_node')
+
+        self.publisher_ = self.create_publisher(String, 'topic', 10)
+
+        timer_period = 0.5  # seconds
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.i = 0
+
+    def timer_callback(self):
+        msg = String()
+        msg.data = 'Hello World: %d' % self.i
+        self.publisher_.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        self.i += 1
+
+def main(args=None):
+
+    rclpy.init(args=args)
+
+    markertracker_node = ProcessFramePubSubs()
+
+    print('Ready.')
+
+    rclpy.spin(markertracker_node)
+
+    # Destroy the node explicitly
+    # (optional - otherwise it will be done automatically
+    # when the garbage collector destroys the node object)
+    markertracker_node.destroy_node()
+    rclpy.shutdown()
+
+
+
+
+
+
+# -----
 class ReusableIdGenerator:
 
     def __init__(self, number):
@@ -293,16 +350,4 @@ class PublisherSubscriberProcessFrame(object):
 
 
 if __name__ == '__main__':
-
-    _node_name = 'markertracker_node'
-
-    print('* {} starting... '.format(_node_name), end="")
-
-    rospy.init_node(_node_name, anonymous=True)
-
-    PublisherSubscriberProcessFrame(_node_name)
-
-    print('Ready.')
-
-    rospy.spin()
-
+    main()
