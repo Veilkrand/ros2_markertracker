@@ -14,9 +14,8 @@ from visualization_msgs.msg import Marker, MarkerArray
 from geometry_msgs.msg import Point, PoseWithCovarianceStamped, PoseArray, Pose, PoseStamped  #, Point32
 from sensor_msgs.msg import Image #, CameraInfo
 
-# python_orocos_kdl
-import PyKDL
-# from tf2.transformations import quaternion_from_euler, euler_from_quaternion, euler_from_matrix
+# from tf.transformations import quaternion_from_euler, euler_from_quaternion, euler_from_matrix
+from transformations import quaternion_from_euler
 
 #from tf import TransformBroadcaster
 
@@ -269,18 +268,10 @@ class PublisherSubscriberProcessFrame(object):
             #                                     )
 
 
-            # _quaternion = quaternion_from_euler(e['ros_rpy'][0],
-            #                                     e['ros_rpy'][1],
-            #                                     e['ros_rpy'][2]
-            #                                     )
-
-            # migrated from TF transformations to PyKDL
-            q = [0, 0, 0, 0]
-            PyKDL.RPY(e['ros_rpy'][0],
-                      e['ros_rpy'][1],
-                      e['ros_rpy'][2]
-                      ).GetQuaternion(q[0], q[1], q[2], q[3])
-
+            _quaternion = quaternion_from_euler(e['ros_rpy'][0],
+                                                e['ros_rpy'][1],
+                                                e['ros_rpy'][2]
+                                                )
 
             gate_pose.orientation.x = _quaternion[0]
             gate_pose.orientation.y = _quaternion[1]
