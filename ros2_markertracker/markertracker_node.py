@@ -14,7 +14,10 @@ from visualization_msgs.msg import Marker, MarkerArray
 from geometry_msgs.msg import Point, PoseWithCovarianceStamped, PoseArray, Pose, PoseStamped  #, Point32
 from sensor_msgs.msg import Image #, CameraInfo
 
-from tf2.transformations import quaternion_from_euler, euler_from_quaternion, euler_from_matrix
+# python_orocos_kdl
+import PyKDL
+# from tf2.transformations import quaternion_from_euler, euler_from_quaternion, euler_from_matrix
+
 #from tf import TransformBroadcaster
 
 import math
@@ -236,9 +239,9 @@ class PublisherSubscriberProcessFrame(object):
     def _create_and_publish_markers_msgs_from_pose_results(self, poses, image_timestamp, camera_frame_id):
         #print(poses)
 
-        marker_array = MarkerArray() # For Rviz visualization
+        marker_array = MarkerArray()  # For Rviz visualization
 
-        pose_array = PoseArray() # For Rviz visualization with current time stamp
+        pose_array = PoseArray()  # For Rviz visualization with current time stamp
         pose_array.header.stamp = image_timestamp
         pose_array.header.frame_id = camera_frame_id
 
@@ -266,10 +269,18 @@ class PublisherSubscriberProcessFrame(object):
             #                                     )
 
 
-            _quaternion = quaternion_from_euler(e['ros_rpy'][0],
-                                                e['ros_rpy'][1],
-                                                e['ros_rpy'][2]
-                                                )
+            # _quaternion = quaternion_from_euler(e['ros_rpy'][0],
+            #                                     e['ros_rpy'][1],
+            #                                     e['ros_rpy'][2]
+            #                                     )
+
+            # migrated from TF transformations to PyKDL
+            q = [0, 0, 0, 0]
+            PyKDL.RPY(e['ros_rpy'][0],
+                      e['ros_rpy'][1],
+                      e['ros_rpy'][2]
+                      ).GetQuaternion(q[0], q[1], q[2], q[3])
+
 
             gate_pose.orientation.x = _quaternion[0]
             gate_pose.orientation.y = _quaternion[1]
