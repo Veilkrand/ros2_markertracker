@@ -15,7 +15,7 @@ from geometry_msgs.msg import Point, PoseWithCovarianceStamped, PoseArray, Pose,
 from sensor_msgs.msg import Image #, CameraInfo
 
 # from tf.transformations import quaternion_from_euler, euler_from_quaternion, euler_from_matrix
-import transformations as tf
+from transformations import quaternion_from_euler
 
 #from tf import TransformBroadcaster
 
@@ -268,7 +268,7 @@ class PublisherSubscriberProcessFrame(object):
             #                                     )
 
 
-            _quaternion = tf.quaternion_from_euler(e['ros_rpy'][0],
+            _quaternion = quaternion_from_euler(e['ros_rpy'][0],
                                                 e['ros_rpy'][1],
                                                 e['ros_rpy'][2]
                                                 )
