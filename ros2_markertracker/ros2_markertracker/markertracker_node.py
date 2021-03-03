@@ -39,8 +39,6 @@ def main(args=None):
 
     markertracker_node = ProcessFramePubSub()
 
-    print('Ready.')
-
     # Spin in a separate thread
     thread = threading.Thread(target=rclpy.spin, args=(markertracker_node,), daemon=True)
     thread.start()
@@ -127,8 +125,8 @@ class ProcessFramePubSub(Node):
         _dist_coeffs = fs.getNode("distortion_coefficients").mat()
         fs.release()
         assert(len(_camera_matrix) and len(_dist_coeffs))
-        self.get_logger().info(f'Camera Matrix: {_camera_matrix}')
-        self.get_logger().info(f'Dist Coeff: {_dist_coeffs}')
+        self.get_logger().debug(f'Camera Matrix: {_camera_matrix}')
+        self.get_logger().debug(f'Dist Coeff: {_dist_coeffs}')
 
 
 
@@ -268,7 +266,9 @@ class ProcessFramePubSub(Node):
 
             # Debug OpenCV Ouput
             # self.get_logger().info(f"0:{e['tvec'][0]} 1:{e['tvec'][1]} 2:{e['tvec'][2]}")
-            self.get_logger().info(f"roll:{e['ros_rpy'][0]} pitch:{e['ros_rpy'][1]} yaw:{e['ros_rpy'][2]}")
+            # self.get_logger().debug(f"roll:{e['ros_rpy'][0]} pitch:{e['ros_rpy'][1]} yaw:{e['ros_rpy'][2]}")
+
+            self.get_logger().info(f"y:{e['tvec'][0]} z:{e['tvec'][1]} x:{e['tvec'][2]}")
 
             # z, -x, -y
             gate_pose.position.x = e['tvec'][2]

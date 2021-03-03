@@ -15,13 +15,13 @@ import math
 '''
 def rvec2rpy_ros2(rvec):
     """
-    From OpenCV rotational vector, convert to RPY euler angles for ROS2
+    From an OpenCV rotational vector, convert to RPY euler angles for ROS2
     """
 
     m, _ = cv2.Rodrigues(rvec)
 
     # // Assuming the angles are in radians.
-    if (m[1, 0] > 0.998):  # // singularity at north pole
+    if m[1, 0] > 0.998:  # // singularity at north pole
         yaw = math.atan2(m[0, 2], m[2, 2])
         roll = math.PI / 2
         pitch = 0
