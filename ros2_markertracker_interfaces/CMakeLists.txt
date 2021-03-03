@@ -24,8 +24,8 @@ find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/GateMarker.msg"
-  "msg/GateMarkersArray.msg"
+  "msg/FiducialMarker.msg"
+  "msg/FiducialMarkerArray.msg"
   # "srv/AddThreeInts.srv"
  )
 

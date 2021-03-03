@@ -21,7 +21,7 @@ from ros2_markertracker.transformations import quaternion_from_euler
 
 import math
 
-from ros2_markertracker.msg import GateMarker, GateMarkersArray
+from ros2_markertracker_interfaces.msg import FiducialMarker, FiducialMarkerArray
 from ros2_markertracker.ArucoWrapper import ArucoWrapper
 
 # ---
@@ -156,7 +156,7 @@ class PublisherSubscriberProcessFrame(object):
         self.poses_pub = rospy.Publisher(_result_poses_topic, PoseArray, queue_size=100)
 
         # GateMarker publisher
-        self.gate_marker_pub = rospy.Publisher(_result_marker_topic, GateMarkersArray, queue_size=100)
+        self.gate_marker_pub = rospy.Publisher(_result_marker_topic, FiducialMarkerArray, queue_size=100)
 
         self.id_gen = ReusableIdGenerator(500)
 
@@ -244,7 +244,7 @@ class PublisherSubscriberProcessFrame(object):
         pose_array.header.stamp = image_timestamp
         pose_array.header.frame_id = camera_frame_id
 
-        gate_marker_array = GateMarkersArray() # For output results
+        gate_marker_array = FiducialMarkerArray() # For output results
         gate_marker_array.header.stamp = rospy.Time.now()
         gate_marker_array.camera_frame_stamp = image_timestamp
 
@@ -329,7 +329,7 @@ class PublisherSubscriberProcessFrame(object):
 
     def create_gate_marker_object(self, pose, corners, frame_id, image_timestamp, marker_id):
 
-        marker = GateMarker()
+        marker = FiducialMarker()
 
         marker.id = marker_id
         marker.corners = corners
