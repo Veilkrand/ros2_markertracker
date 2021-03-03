@@ -1,5 +1,6 @@
 from setuptools import setup
 
+
 package_name = 'ros2_markertracker'
 
 setup(
@@ -20,7 +21,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'markertracker = ros2_markertracker.markertracker_node:main'
+            'markertracker_node=ros2_markertracker.markertracker_node:main'
         ],
     },
 )
