@@ -2,8 +2,7 @@
 
 ## Build
 ```
-colcon build --packages-select ros2_markertracker_interfaces
-colcon build --packages-select ros2_markertracker
+colcon build --packages-select ros2_markertracker_interfaces ros2_markertracker
 source install/setup.bash
 ```
 
