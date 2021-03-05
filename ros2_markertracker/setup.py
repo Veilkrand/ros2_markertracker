@@ -1,11 +1,10 @@
 from setuptools import setup
 
-
 package_name = 'ros2_markertracker'
 
 setup(
     name=package_name,
-    version='0.0.1',
+    version='0.5.0',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -14,14 +13,14 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='Alberto NG',
+    maintainer='Alberto Naranjo',
     maintainer_email='155007+Veilkrand@users.noreply.github.com',
     description='TODO: Package description',
-    license='MIT License',
+    license='MIT',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'markertracker_node=ros2_markertracker.markertracker_node:main'
+            'markertracker_node = ros2_markertracker.markertracker_node:main'
         ],
     },
 )

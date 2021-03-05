@@ -6,7 +6,7 @@ colcon build --packages-select ros2_markertracker_interfaces ros2_markertracker
 source install/setup.bash
 ```
 
-## Camera
+## Launch Camera
 ```
 ros2 launch src/ros2_markertracker/ros2_markertracker/launch/v4l2_camera.launch.py
 ```
